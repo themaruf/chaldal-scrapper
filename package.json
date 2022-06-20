@@ -1,0 +1,17 @@
+{
+  "name": "chaldal-scrapper",
+  "version": "1.0.1",
+  "description": "chaldal-scrapper",
+  "main": "server.js",
+  "author": "themaruf",
+  "license": "ISC",
+  "scripts": {
+    "dev": "nodemon server.js"
+  },
+  "dependencies": {
+    "cheerio": "latest",
+    "express": "latest",
+    "nodemon": "^2.0.14",
+    "request": "latest"
+  }
+}
