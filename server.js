@@ -5,7 +5,7 @@ var cheerio = require("cheerio");
 var app = express();
 
 app.get("/", function (req, res) {
-  var url = "https://chaldal.com/dates-khejur";  
+  var url = "https://chaldal.com/fresh-fruit";  
 
   request(url, function (error, response, html) {
     if (!error) {
@@ -25,11 +25,20 @@ app.get("/", function (req, res) {
           qty = $(element).find(".product > div > .subText").text().trim();
           json.qty = qty;
 
-          price = $(element).find(".product > div > div.discountedPriceSection > div.price").text().trim();
-          json.price = price;
+          if($(element).find(".product > div.imageWrapper > div.price").length > 0){
+            price = $(element).find(".product > div.imageWrapper > div.price").text().trim();
+            json.price = price;
 
-          discountPrice = $(element).find(".product > div >  div.discountedPriceSection > div.discountedPrice").text().trim();
-          json.discountPrice = discountPrice;
+            json.discountPrice = "No discount";
+          }
+
+          if($(element).find("div.product > div.imageWrapper >  div.discountedPriceSection > div.discountedPrice").length > 0){
+            price = $(element).find("div.product > div.imageWrapper > div.discountedPriceSection > div.price").text().trim();
+            json.price = price;
+  
+            discountPrice = $(element).find("div.product > div.imageWrapper >  div.discountedPriceSection > div.discountedPrice").text().trim();
+            json.discountPrice = discountPrice;
+          }
 
           if (json.name != "") {
             fs.appendFile(
